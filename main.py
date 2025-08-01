@@ -13,21 +13,24 @@ def fetch_data(username: str):
   events: list = first_five
   
   for event in events:
-     type: str = event.get("type", "N/A")
+     event_type: str = event.get("type", "N/A")
     
-     if type == "PushEvent":
-       print(f"-  A commit has been pushed to a repository.")
-     elif type == "CreateEvent":
-       print(f"-  A branch or tag has been created.")
-     elif type == "ForkEvent":
+     if event_type == "PushEvent":
+       print(f"-  A commit has been pushed to {event.get('repo').get('name')}")
+     elif event_type == "CreateEvent":
+       if event.get('payload')["ref_type"] == "repository":
+         print(f"-  Created a repo {event.get('repo').get('name')}")
+       elif event.get('payload')["ref_type"] == "branch":
+         print(f"-  Created a branch {event.get('payload').get('ref')} at {event.get('repo').get('name')}")
+     elif event_type == "ForkEvent":
        print(f"-  A repository has been forked.")
-     elif type == "WatchEvent":
-       print(f"-  A user has starred a repository.")
-     elif type == "PullRequestEvent":
+     elif event_type == "WatchEvent":
+       print(f"-  Starred a repository {event.get('repo').get('name')}")
+     elif event_type == "PullRequestEvent":
        print(f"-  A pull request has been opened, closed, or merged.")
-     elif type == "IssuesEvent":
+     elif event_type == "IssuesEvent":
        print(f"-  An issue has been opened, closed, or reopened.")
-     elif type == "IssueCommentEvent":
+     elif event_type == "IssueCommentEvent":
        print(f"-  A comment has been added to an issue or pull request.")
      else:
        print(f"Unknown type: {type}")
