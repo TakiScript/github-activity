@@ -33,7 +33,7 @@ def fetch_data(username: str):
      elif event_type == "IssueCommentEvent":
        print(f"-  A comment has been added to an issue or pull request.")
      else:
-       print(f"Unknown type: {type}")
+       print(f"Unknown type: {event_type}")
   
 def validate_input(user_input):
   try:
@@ -48,11 +48,7 @@ def validate_input(user_input):
 def main():
   while True: 
     user_input: str = input("github-activity > ")
-    
-    print(f'You said: {user_input}')
-    
     validate_input(user_input)
-    
     username: str = user_input.strip()
     
     fetch_data(username)
