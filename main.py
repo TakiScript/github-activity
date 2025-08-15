@@ -51,6 +51,9 @@ def fetch_data(username: str):
      elif event_type == "DeleteEvent":
        print(f"-  A {ref_type} named {ref} was deleted at {repo_name}")
        
+     elif event_type == "PullRequestReviewCommentEvent":
+       print(f"-  {action_type.capitalize()} a PR review comment at {repo_name}")
+       
      else:
        print(f"Unknown type: {event_type}")
   
